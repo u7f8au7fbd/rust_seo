@@ -3,6 +3,8 @@ name = "rust_seo"
 version = "0.0.0"
 edition = "2021"
 [dependencies]
+serde = { version = "*", features = ["derive"] }
+toml = { version = "*" }
 [profile.dev]
 opt-level = 1
 [profile.dev.package."*"]
