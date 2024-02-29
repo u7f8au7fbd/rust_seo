@@ -15,10 +15,10 @@ pub fn url_to_name(url: &str) -> String {
 }
 
 pub fn clean_temp() {
-    if let Err(err) = std::fs::remove_dir_all("temp") {
-        eprintln!("tempをリセット出来ませんでした : {}", err);
+    if let Err(err) = std::fs::remove_dir_all("db/output") {
+        eprintln!("outputをリセット出来ませんでした : {}", err);
     }
-    std::fs::create_dir("temp").unwrap_or_else(|err| {
-        eprintln!("tempを再生成できませんでした : {}", err);
+    std::fs::create_dir("db/output").unwrap_or_else(|err| {
+        eprintln!("outputを再生成できませんでした : {}", err);
     });
 }
