@@ -3,8 +3,17 @@ name = "rust_seo"
 version = "0.0.0"
 edition = "2021"
 [dependencies]
+#シリアライズ
 serde = { version = "*", features = ["derive"] }
 toml = { version = "*" }
+#HTMLパーサ
+scraper = { version = "*" }
+#HTTPクライアント
+reqwest = { version = "*" }
+#非同期処理
+tokio = { version = "*", features = ["full"] }
+#urlパーサ
+url = { version = "*" }
 [profile.dev]
 opt-level = 1
 [profile.dev.package."*"]
