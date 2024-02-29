@@ -1,6 +1,7 @@
 use reqwest::Error;
-mod connect;
-mod forming;
+mod tools;
+use tools::connect;
+use tools::forming;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {

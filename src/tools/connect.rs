@@ -1,7 +1,8 @@
-use crate::forming;
 use reqwest::Error;
 use std::fs::File;
 use std::io::Write;
+use crate::tools::forming;
+
 pub async fn get(url: &str) -> Result<(), Error> {
     let response = reqwest::get(url).await?;
     let body = response.text().await?;
