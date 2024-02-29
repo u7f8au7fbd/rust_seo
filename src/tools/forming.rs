@@ -1,3 +1,12 @@
+use std::process::Command;
+
+pub fn set_utf8() {
+    Command::new("cmd")
+        .args(["/C", "chcp 65001"])
+        .output()
+        .expect("UTF-8に設定できませんでした");
+}
+
 pub fn url_to_name(url: &str) -> String {
     url.replace("http://", "")
         .replace("https://", "")
@@ -6,6 +15,10 @@ pub fn url_to_name(url: &str) -> String {
 }
 
 pub fn clean_temp() {
-    let _ = std::fs::remove_dir_all("temp");
-    let _ = std::fs::create_dir("temp");
+    if let Err(err) = std::fs::remove_dir_all("temp") {
+        eprintln!("tempをリセット出来ませんでした : {}", err);
+    }
+    std::fs::create_dir("temp").unwrap_or_else(|err| {
+        eprintln!("tempを再生成できませんでした : {}", err);
+    });
 }
