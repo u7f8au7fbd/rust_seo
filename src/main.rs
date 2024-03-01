@@ -7,8 +7,10 @@ use tools::serialization;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    forming::set_utf8();
-    forming::clean_temp();
+    forming::set_utf8();//UTF-8に設定
+    forming::clean_temp();//DBファイルをリセット
+
+    //以下はhtmlを取得実験
     connect::get("https://www.google.com").await?;
     connect::get("https://www.bing.com/").await?;
     connect::get("https://www.yahoo.co.jp").await?;
