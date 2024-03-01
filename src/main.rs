@@ -16,7 +16,7 @@ async fn main() -> Result<(), Error> {
     connect::get("https://www.yahoo.co.jp").await?;
     println!("インプット終了");
     // 検索したいクエリを定義する
-    let query = "SEO対策";
+    let query = "ブルアカ Tier";
 
     // Google検索のURLを取得する
     let url = search::get_google_search_url(query);
@@ -24,7 +24,7 @@ async fn main() -> Result<(), Error> {
     let results = search::get_search_results(&url).await.unwrap();
 
     for result in results.iter().take(18) {
-        
+
         println!("{}", result);
     }
     Ok(())
