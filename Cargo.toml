@@ -15,6 +15,10 @@ tokio = { version = "*", features = ["full"] }
 #urlパーサ
 url = { version = "*" }
 select = { version = "*" }
+#guiクレート
+egui = "*"
+eframe = "*"
+
 [profile.dev]
 opt-level = 1
 [profile.dev.package."*"]
