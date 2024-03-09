@@ -1,3 +1,4 @@
+use crate::seo;
 use eframe::egui::ComboBox;
 
 pub fn gui() -> Result<(), eframe::Error> {
@@ -9,8 +10,8 @@ pub fn gui() -> Result<(), eframe::Error> {
     };
 
     let mut selected = String::from("google.com");
-    let mut search_text = "".to_owned();
-    let mut serialize_type = "".to_owned();
+    let mut search_text = "https://www.google.com".to_owned();
+    let mut serialize_type = "toml".to_owned();
     let mut amount = 18;
 
     eframe::run_simple_native("Rusty SEO App", options, move |main, _| {
@@ -33,7 +34,13 @@ pub fn gui() -> Result<(), eframe::Error> {
                 });
 
             ui.add(egui::Slider::new(&mut amount, 18..=180).text("Amount of results"));
-            ui.button("Run");
+
+            if ui.button("Run").clicked() {
+                println!("Running search for: {}", search_text);
+                tokio::task::spawn(async move {
+                    seo::test().await.unwrap();
+                });
+            }
 
             ComboBox::from_label("Export type:")
                 .selected_text(&serialize_type)
@@ -43,7 +50,9 @@ pub fn gui() -> Result<(), eframe::Error> {
                     ui.selectable_value(&mut serialize_type, String::from("csv"), "csv");
                 });
 
-            ui.button("Export");
+            if ui.button("Export").clicked() {
+                println!("Exporting to: {}", serialize_type);
+            }
         });
     })
 }
