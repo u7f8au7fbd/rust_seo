@@ -10,8 +10,6 @@ pub async fn test() -> Result<(), Error> {
     serialization::input_output(); //DBファイルに書き込み
                                    //以下はhtmlを取得実験
     connect::get("https://www.google.com").await?;
-    connect::get("https://www.bing.com/").await?;
-    connect::get("https://www.yahoo.co.jp").await?;
     println!("インプット終了");
     // 検索したいクエリを定義する
     let query = "SEO対策";

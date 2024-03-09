@@ -9,8 +9,8 @@ pub fn gui() -> Result<(), eframe::Error> {
         ..Default::default()
     };
 
-    let mut selected = String::from("google.com");
-    let mut search_text = "https://www.google.com".to_owned();
+    let mut selected = String::from("https://www.google.com");
+    let mut search_text = "".to_owned();
     let mut serialize_type = "toml".to_owned();
     let mut amount = 18;
 
@@ -28,9 +28,21 @@ pub fn gui() -> Result<(), eframe::Error> {
             ComboBox::from_label("Serch Engine")
                 .selected_text(&selected)
                 .show_ui(ui, |ui| {
-                    ui.selectable_value(&mut selected, String::from("google.com"), "Google");
-                    ui.selectable_value(&mut selected, String::from("yahoo.co.jp"), "Yahoo");
-                    ui.selectable_value(&mut selected, String::from("bing.com"), "Bing");
+                    ui.selectable_value(
+                        &mut selected,
+                        String::from("https://www.google.com"),
+                        "Google",
+                    );
+                    ui.selectable_value(
+                        &mut selected,
+                        String::from("https://www.yahoo.co.jp"),
+                        "Yahoo",
+                    );
+                    ui.selectable_value(
+                        &mut selected,
+                        String::from("https://www.bing.com"),
+                        "Bing",
+                    );
                 });
 
             ui.add(egui::Slider::new(&mut amount, 18..=180).text("Amount of results"));
