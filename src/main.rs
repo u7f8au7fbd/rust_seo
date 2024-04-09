@@ -1,15 +1,11 @@
-use std::process::Command;
+mod commands;
+use commands::*;
+use gui::*;
+mod gui;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     set_utf8();
-
+    gui()?;
     Ok(())
-}
-
-fn set_utf8() {
-    Command::new("cmd")
-        .args(["/C", "chcp 65001"])
-        .output()
-        .expect("UTF-8に設定できませんでした");
 }

@@ -13,8 +13,7 @@ reqwest = { version = "*" }
 tokio = { version = "*", features = ["full"] }
 futures = "*"
 #guiクレート
-egui = "*"
-eframe = "*"
+eframe = { version = "*", features = ["default"] }
 
 [profile.dev]
 opt-level = 1
