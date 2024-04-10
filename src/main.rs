@@ -2,10 +2,16 @@ mod commands;
 use commands::*;
 use gui::*;
 mod gui;
+mod input;
+use input::*;
+mod search;
+use search::*;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+async fn main()-> Result<(), Box<dyn std::error::Error>>{
     set_utf8();
+    input_config();
+    searching().await?;
     gui()?;
     Ok(())
 }
