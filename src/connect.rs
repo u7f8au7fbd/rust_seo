@@ -41,5 +41,5 @@ pub async fn get_google(
 
 fn get_now() -> String {
     let dt = Local::now();
-    dt.format("%Y-%m-%d_%H-%M-%S").to_string()
+    dt.format("%Y年%m月%d曜日_%H時%M分%S秒").to_string()
 }
