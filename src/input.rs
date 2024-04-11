@@ -19,9 +19,9 @@ pub fn input_config() {
     println!("{}", config.search_words);
 }
 
-#[derive(Debug, Deserialize)]
-struct Config {
-    api_key: String,
-    search_engine_id: String,
-    search_words: String,
+#[derive(Debug, Deserialize, Clone)]
+pub struct Config {
+    pub api_key: String,
+    pub search_engine_id: String,
+    pub search_words: String,
 }

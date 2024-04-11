@@ -14,7 +14,8 @@ tokio = { version = "*", features = ["full"] }
 futures = "*"
 #guiクレート
 eframe = { version = "*", features = ["default"] }
-
+#現在時刻の取得
+chrono = "*"
 
 [profile.dev]
 opt-level = 1
