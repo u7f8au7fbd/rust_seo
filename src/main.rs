@@ -6,10 +6,9 @@ mod input;
 use input::*;
 
 #[tokio::main]
-async fn main()-> Result<(), Box<dyn std::error::Error>>{
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     set_utf8();
     input_config();
-    searching().await?;
     gui()?;
     Ok(())
 }

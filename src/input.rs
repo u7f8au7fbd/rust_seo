@@ -15,11 +15,13 @@ pub fn input_config() {
         serde_json::from_str(&contents).expect("コンフィグファイルの読み込みに失敗");
 
     println!("{}", config.api_key);
+    println!("{}", config.search_engine_id);
     println!("{}", config.search_words);
 }
 
 #[derive(Debug, Deserialize)]
 struct Config {
     api_key: String,
+    search_engine_id: String,
     search_words: String,
 }
