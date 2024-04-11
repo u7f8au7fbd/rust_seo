@@ -14,8 +14,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     input_config();
     get_google(
         "Rust言語".to_string(), // Corrected argument
-        "AIzaSyBFa1HM33_pgrfzBXjL04QHKqyoebcPnkg".to_string(),
-        "e30a673cf74764c2d".to_string(),
+        "AIzaSyAd5mMgR2D1OsftLC_pJqshqIWVkV5GQG0".to_string(),
+        "90c2b21e39e984ff6".to_string(),
     )
     .await?;
     gui()?;
