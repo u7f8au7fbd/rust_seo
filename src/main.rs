@@ -9,6 +9,7 @@ use connect::*;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    clean_console();
     set_utf8();
     input_config();
     get_google(
