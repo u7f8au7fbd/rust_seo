@@ -22,6 +22,17 @@ pub async fn get_google(
             for link in links {
                 if let Some(link_url) = link["link"].as_str() {
                     println!("{}", link_url);
+                    let mut urls = Vec::new();
+                    for link in links {
+                        if let Some(link_url) = link["link"].as_str() {
+                            urls.push(link_url.to_string());
+                        }
+                    }
+
+                    let json_output = serde_json::json!({ "urls": urls });
+                    let output_path = "./output/urls.json";
+                    let mut file = File::create(output_path)?;
+                    file.write_all(json_output.to_string().as_bytes())?;
                 }
             }
         }
