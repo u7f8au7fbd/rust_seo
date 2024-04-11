@@ -4,8 +4,6 @@ use gui::*;
 mod gui;
 mod input;
 use input::*;
-mod search;
-use search::*;
 
 #[tokio::main]
 async fn main()-> Result<(), Box<dyn std::error::Error>>{

@@ -8,13 +8,13 @@ edition = "2021"
 serde = { version = "*", features = ["derive"] }
 serde_json = { version = "*" }
 #HTTPクライアント
-reqwest = { version = "*" ,features = ["blocking"]}
-scraper = "*"
+reqwest = { version = "*", features = ["blocking"] }
 #非同期処理
 tokio = { version = "*", features = ["full"] }
 futures = "*"
 #guiクレート
 eframe = { version = "*", features = ["default"] }
+
 
 [profile.dev]
 opt-level = 1
