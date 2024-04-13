@@ -2,6 +2,8 @@ use chrono::Local;
 use std::fs::File;
 use std::io::Write;
 
+use crate::commands;
+
 pub async fn get_google(
     query: String,
     api_key: String,
@@ -29,10 +31,22 @@ pub async fn get_google(
                 }
             }
         }
+        //Custom Search EngineのAPIで取得できる今日1日の上限APIから読み込み表示
+        if let Some(links) = data["queries"].as_array(){
+            for link in links{
+                if let Some(api_count) = link["request"][0]["count"].as_u64(){
+                    println!("{}", api_count);
+                }
+            }
+        }
     }
 
     let json_data = serde_json::to_string(&resoult)?;
-    let file_path = format!("./output/URLs({})[{}].json", query, get_now());
+    let dir_path = format!("./output/{}", commands::format_path(&query));
+
+    std::fs::create_dir_all(&dir_path)?;
+
+    let file_path = format!("{}/{}.json", dir_path, get_now());
     let mut file = File::create(file_path)?;
     file.write_all(json_data.as_bytes())?;
 

@@ -11,3 +11,12 @@ pub fn clean_console() {
         .output()
         .expect("コンソールをリセットできませんでした");
 }
+
+pub fn format_path(path: &str) -> String {
+    let invalid_chars = ['/', '\\', ':', '*', '?', '"', '<', '>', '|'];
+    let formatted_path = path
+        .chars()
+        .map(|c| if invalid_chars.contains(&c) { ' ' } else { c })
+        .collect();
+    formatted_path
+}
