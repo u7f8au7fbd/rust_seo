@@ -13,18 +13,18 @@ pub fn test() {
     // Compare the arrays and print differing indices
     for (i, (item1, item2)) in array1.iter().zip(array2.iter()).enumerate() {
         if item1 == item2 {
-            println!("\x1b[32m {}\x1b[0m", i + 1); // Print in green color
+            println!("\x1b[32m{}\x1b[0m", i);
         } else {
             let index = array2.iter().position(|x| x == item1);
             match index {
                 Some(idx) => {
                     if idx > i {
-                        println!("\x1b[31{}: {} ↓\x1b[0m", i + 1, idx + 1);
+                        println!("\x1b[31{}: {} ↓\x1b[0m", i, idx);
                     } else {
-                        println!("{}:\x1b[31m {}\x1b[32m ↑\x1b[0m", i + 1, idx + 1);
+                        println!("{}:\x1b[31m {}\x1b[32m ↑\x1b[0m", i, idx);
                     }
                 }
-                None => println!("\x1b[31m{}: out\x1b[0m", i + 1),
+                None => println!("\x1b[31m{}: out\x1b[0m", i),
             }
         }
     }
