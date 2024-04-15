@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::Read;
 pub fn input_config() {
     // Open the config file
-    let mut file = File::open("./input/config.json").expect("ファイルが見つかりません");
+    let mut file = File::open("./db/in/config.json").expect("ファイルが見つかりません");
 
     // Read the contents of the file into a string
     let mut contents = String::new();

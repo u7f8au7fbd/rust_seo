@@ -3,8 +3,8 @@ use std::fs;
 
 pub fn test() {
     // Read the contents of the JSON files
-    let file1 = fs::read_to_string("./output/1.json").expect("Failed to read file 1.json");
-    let file2 = fs::read_to_string("./output/2.json").expect("Failed to read file 2.json");
+    let file1 = fs::read_to_string("./db/out/1.json").expect("Failed to read file 1.json");
+    let file2 = fs::read_to_string("./db/out/2.json").expect("Failed to read file 2.json");
 
     // Parse the JSON contents into arrays
     let array1: Vec<Value> = serde_json::from_str(&file1).expect("Failed to parse file 1.json");

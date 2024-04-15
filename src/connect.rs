@@ -32,9 +32,9 @@ pub async fn get_google(
             }
         }
         //Custom Search EngineのAPIで取得できる今日1日の上限APIから読み込み表示
-        if let Some(links) = data["queries"].as_array(){
-            for link in links{
-                if let Some(api_count) = link["request"][0]["count"].as_u64(){
+        if let Some(links) = data["queries"].as_array() {
+            for link in links {
+                if let Some(api_count) = link["request"][0]["count"].as_u64() {
                     println!("{}", api_count);
                 }
             }
@@ -42,7 +42,7 @@ pub async fn get_google(
     }
 
     let json_data = serde_json::to_string(&resoult)?;
-    let dir_path = format!("./output/{}", commands::format_path(&query));
+    let dir_path = format!("./db/out/{}", commands::format_path(&query));
 
     std::fs::create_dir_all(&dir_path)?;
 
