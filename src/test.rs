@@ -1,34 +1,8 @@
 use std::fs::File;
 use std::io::Read;
-macro_rules! cmd_color {
-    (black) => {
-        "\x1b[30m"
-    };
-    (red) => {
-        "\x1b[31m"
-    };
-    (green) => {
-        "\x1b[32m"
-    };
-    (yellow) => {
-        "\x1b[33m"
-    };
-    (blue) => {
-        "\x1b[34m"
-    };
-    (magenta) => {
-        "\x1b[35m"
-    };
-    (cyan) => {
-        "\x1b[36m"
-    };
-    (white) => {
-        "\x1b[37m"
-    };
-    (reset) => {
-        "\x1b[0m"
-    };
-}
+#[macro_use]
+mod macros;
+use crate::cmd_color;
 
 pub fn read_json(file_path: &str) {
     let mut file = File::open(file_path).expect("ファイルを開けませんでした。");
