@@ -13,6 +13,10 @@ pub fn clear() {
     println!("------------------------")
 }
 
+pub fn line() {
+    println!("------------------------")
+}
+
 pub fn format_path(path: &str) -> String {
     let invalid_chars = ['/', '\\', ':', '*', '?', '"', '<', '>', '|'];
     let formatted_path = path

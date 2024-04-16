@@ -12,14 +12,11 @@ mod macros;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    /*
-    input_config();
-    gui()?;
-    */
     commands::clear();
     commands::utf8();
 
-    test::vec_test();
-
+    //input_config();
+    //gui()?;
+    test::test_main();
     Ok(())
 }

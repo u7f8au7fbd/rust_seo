@@ -1,22 +1,48 @@
 use std::fs::File;
-use std::io::Read;
+use std::io::{BufRead, Read};
 #[macro_use]
 mod macros;
-use crate::cmd_color;
+use crate::{cmd_color, commands};
+use serde_json::Value;
 
-pub fn read_json(file_path: &str) {
-    let mut file = File::open(file_path).expect("ファイルを開けませんでした。");
-    let mut contents = String::new();
-    file.read_to_string(&mut contents)
-        .expect("ファイルが読み込めませんでした。");
+pub fn test_main() {
+    let mut group: Vec<Vec<String>> = Vec::new();
 
-    let json: serde_json::Value =
-        serde_json::from_str(&contents).expect("Json形式に変換できませんでした。");
-
-    println!("{:#?}", json);
+    for i in search_file("./db/out") {
+        group.push(get_json(&i));
+    }
+    comparison(group);
 }
 
-pub fn search_fire(dir_path: &str) -> Vec<String> {
+//実装完了
+pub fn get_json(fire_path: &str) -> Vec<String> {
+    let mut file = File::open(fire_path).expect("ファイルを開けませんでした。");
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)
+        .expect("ファイルを読み込めませんでした。");
+
+    let json: Value = serde_json::from_str(&contents).expect("JSONのパースに失敗しました。");
+
+    let mut vec_string = Vec::new();
+
+    if let Some(arr) = json.as_array() {
+        for value in arr {
+            if let Some(str_value) = value.as_str() {
+                vec_string.push(str_value.to_string());
+            }
+        }
+    }
+
+    vec_string
+}
+
+pub fn vec_printer(vec_string: Vec<String>) {
+    for i in vec_string {
+        println!("{}", i);
+    }
+}
+
+pub fn search_file(dir_path: &str) -> Vec<String> {
     let entries = std::fs::read_dir(dir_path).expect("ディレクトリを読み込めませんでした。");
 
     let mut json_paths = Vec::new(); // Create an empty vector to store the JSON paths
@@ -26,7 +52,6 @@ pub fn search_fire(dir_path: &str) -> Vec<String> {
         let file_name = file_path.display();
 
         if file_path.is_file() && file_path.extension().unwrap() == "json" {
-            println!("{}", file_name);
             json_paths.push(file_name.to_string()); // Add the JSON path to the vector
         }
     }
@@ -34,40 +59,9 @@ pub fn search_fire(dir_path: &str) -> Vec<String> {
     json_paths
 }
 
-pub fn print_json(json_paths: Vec<String>) {
-    for json_path in json_paths {
-        read_json(&json_path);
-    }
-}
-
-pub fn compare(json_paths: Vec<String>) {
-    for json_path in json_paths {
-        //jsonを読み込む
-        let mut file = File::open(json_path).expect("ファイルを開けませんでした。");
-        //1つ前のjsonと比較する
-    }
-}
-
-pub fn vec_test() {
-    let test1: Vec<String> = vec![
-        "あ".to_string(),
-        "い".to_string(),
-        "う".to_string(),
-        "え".to_string(),
-        "お".to_string(),
-    ];
-
-    let test2: Vec<String> = vec![
-        "あ".to_string(),
-        "い".to_string(),
-        "ん".to_string(),
-        "お".to_string(),
-        "え".to_string(),
-    ];
-
-    let group = [test1, test2];
-
+pub fn comparison(group: Vec<Vec<String>>) {
     for i in 1..group.len() {
+        commands::line();
         let before_vec = &group[i - 1];
         let after_vec = &group[i];
 
