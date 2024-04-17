@@ -6,14 +6,14 @@ use std::io::Read;
 pub fn search_file(dir_path: &str) -> Vec<String> {
     let entries = std::fs::read_dir(dir_path).expect("ディレクトリを読み込めませんでした。");
 
-    let mut json_paths = Vec::new(); // Create an empty vector to store the JSON paths
+    let mut json_paths = Vec::new();
 
     for entry in entries {
         let file_path = entry.unwrap().path();
         let file_name = file_path.display();
 
         if file_path.is_file() && file_path.extension().unwrap() == "json" {
-            json_paths.push(file_name.to_string()); // Add the JSON path to the vector
+            json_paths.push(file_name.to_string());
         }
     }
 
@@ -64,7 +64,7 @@ pub fn comparison(file_path: &str) {
                 );
             } else if after_vec.contains(before) {
                 println!(
-                    "{}{}:{}{}{}",
+                    "{}{}:{}{}->{}",
                     cmd_color!(yellow),
                     index + 1,
                     before,
