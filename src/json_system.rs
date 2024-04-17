@@ -1,4 +1,6 @@
 use crate::{cmd_color, commands};
+use eframe::egui::debug_text::print;
+use reqwest::header::AGE;
 use serde_json::Value;
 use std::fs::File;
 use std::io::Read;
@@ -54,25 +56,32 @@ pub fn comparison(file_path: &str) {
         let after_vec = &group[i];
 
         for (index, (before, after)) in before_vec.iter().zip(after_vec.iter()).enumerate() {
+            let after_index = after_vec.iter().position(|x| x == before);
             if before == after {
                 println!(
-                    "{}{}:{}{}",
+                    "{}-{}:{}{}",
                     cmd_color!(green),
                     index + 1,
                     before,
                     cmd_color!(reset)
                 );
             } else if after_vec.contains(before) {
+                if index > after_index.unwrap() {
+                    print!("{}↑", cmd_color!(green));
+                } else {
+                    print!("{}↓", cmd_color!(red));
+                }
                 println!(
-                    "{}{}:{}{}->{}",
+                    "{}{}->{}:{}->{}{}",
                     cmd_color!(yellow),
                     index + 1,
+                    after_index.unwrap() + 1,
                     before,
                     after,
                     cmd_color!(reset)
                 );
             } else {
-                println!("{}{}:OUT{}", cmd_color!(red), index + 1, cmd_color!(reset));
+                println!("{}x{}:OUT{}", cmd_color!(red), index + 1, cmd_color!(reset));
             }
         }
     }
