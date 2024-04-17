@@ -1,11 +1,9 @@
 mod commands;
-use gui::*;
-mod gui;
-mod input;
-use input::*;
 mod comparison;
 mod connect;
-mod test;
+mod gui;
+mod input;
+mod json_system;
 
 #[macro_use]
 mod macros;
@@ -15,8 +13,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     commands::clear();
     commands::utf8();
 
-    //input_config();
-    //gui()?;
-    test::test_main();
+    //input::input_config();
+    //gui::gui()?;
+    json_system::comparison("./db/out");
     Ok(())
 }

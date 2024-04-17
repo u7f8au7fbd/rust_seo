@@ -1,21 +1,26 @@
-use std::fs::File;
-use std::io::{BufRead, Read};
-#[macro_use]
-mod macros;
 use crate::{cmd_color, commands};
 use serde_json::Value;
+use std::fs::File;
+use std::io::Read;
 
-pub fn test_main() {
-    let mut group: Vec<Vec<String>> = Vec::new();
+pub fn search_file(dir_path: &str) -> Vec<String> {
+    let entries = std::fs::read_dir(dir_path).expect("ディレクトリを読み込めませんでした。");
 
-    for i in search_file("./db/out") {
-        group.push(get_json(&i));
+    let mut json_paths = Vec::new(); // Create an empty vector to store the JSON paths
+
+    for entry in entries {
+        let file_path = entry.unwrap().path();
+        let file_name = file_path.display();
+
+        if file_path.is_file() && file_path.extension().unwrap() == "json" {
+            json_paths.push(file_name.to_string()); // Add the JSON path to the vector
+        }
     }
-    comparison(group);
+
+    json_paths
 }
 
-//実装完了
-pub fn get_json(fire_path: &str) -> Vec<String> {
+pub fn get_data(fire_path: &str) -> Vec<String> {
     let mut file = File::open(fire_path).expect("ファイルを開けませんでした。");
     let mut contents = String::new();
     file.read_to_string(&mut contents)
@@ -36,30 +41,13 @@ pub fn get_json(fire_path: &str) -> Vec<String> {
     vec_string
 }
 
-pub fn vec_printer(vec_string: Vec<String>) {
-    for i in vec_string {
-        println!("{}", i);
-    }
-}
+pub fn comparison(file_path: &str) {
+    let mut group: Vec<Vec<String>> = Vec::new();
 
-pub fn search_file(dir_path: &str) -> Vec<String> {
-    let entries = std::fs::read_dir(dir_path).expect("ディレクトリを読み込めませんでした。");
-
-    let mut json_paths = Vec::new(); // Create an empty vector to store the JSON paths
-
-    for entry in entries {
-        let file_path = entry.unwrap().path();
-        let file_name = file_path.display();
-
-        if file_path.is_file() && file_path.extension().unwrap() == "json" {
-            json_paths.push(file_name.to_string()); // Add the JSON path to the vector
-        }
+    for i in search_file(file_path) {
+        group.push(get_data(&i));
     }
 
-    json_paths
-}
-
-pub fn comparison(group: Vec<Vec<String>>) {
     for i in 1..group.len() {
         commands::line();
         let before_vec = &group[i - 1];
