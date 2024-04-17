@@ -32,18 +32,17 @@ pub fn gui() -> Result<(), eframe::Error> {
 
             ctx.set_fonts(fonts);
             //以下よりUIの作成
-            let config = input::config();
             if ui.button("比較").clicked() {
                 let mut db_path = "./db/out/".to_string();
-                db_path.push_str(&config.search_words);
+                db_path.push_str(&input::config().search_words);
                 comparison::comparison(&db_path);
             }
             if ui.button("探索").clicked() {
                 tokio::task::spawn(async move {
                     connect::get_google(
-                        config.search_words,
-                        config.api_key,
-                        config.search_engine_id,
+                        input::config().search_words,
+                        input::config().api_key,
+                        input::config().search_engine_id,
                     )
                     .await
                     .unwrap();
