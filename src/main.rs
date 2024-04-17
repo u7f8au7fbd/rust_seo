@@ -1,8 +1,8 @@
 mod commands;
-mod comparison;
 mod connect;
 mod gui;
 mod input;
+mod json_system;
 #[macro_use]
 mod macros;
 
