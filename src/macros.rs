@@ -25,6 +25,30 @@ macro_rules! cmd_color {
     (white) => {
         "\x1b[37m"
     };
+    (black_b) => {
+        "\x1b[40m"
+    };
+    (red_b) => {
+        "\x1b[41m"
+    };
+    (green_b) => {
+        "\x1b[42m"
+    };
+    (yellow_b) => {
+        "\x1b[43m"
+    };
+    (blue_b) => {
+        "\x1b[44m"
+    };
+    (magenta_b) => {
+        "\x1b[45m"
+    };
+    (cyan_b) => {
+        "\x1b[46m"
+    };
+    (white_b) => {
+        "\x1b[47m"
+    };
     (reset) => {
         "\x1b[0m"
     };

@@ -1,30 +1,92 @@
+use crate::{cmd_color, commands};
 use serde_json::Value;
-use std::fs;
+use std::fs::File;
+use std::io::Read;
 
-pub fn test() {
-    // Read the contents of the JSON files
-    let file1 = fs::read_to_string("./db/out/1.json").expect("Failed to read file 1.json");
-    let file2 = fs::read_to_string("./db/out/2.json").expect("Failed to read file 2.json");
+pub fn search_file(dir_path: &str) -> Vec<String> {
+    let entries = std::fs::read_dir(dir_path).expect("ディレクトリを読み込めませんでした。");
 
-    // Parse the JSON contents into arrays
-    let array1: Vec<Value> = serde_json::from_str(&file1).expect("Failed to parse file 1.json");
-    let array2: Vec<Value> = serde_json::from_str(&file2).expect("Failed to parse file 2.json");
+    let mut json_paths = Vec::new();
 
-    // Compare the arrays and print differing indices
-    for (i, (item1, item2)) in array1.iter().zip(array2.iter()).enumerate() {
-        if item1 == item2 {
-            println!("\x1b[32m{}\x1b[0m", i);
-        } else {
-            let index = array2.iter().position(|x| x == item1);
-            match index {
-                Some(idx) => {
-                    if idx > i {
-                        println!("\x1b[31{}: {} ↓\x1b[0m", i, idx);
-                    } else {
-                        println!("{}:\x1b[31m {}\x1b[32m ↑\x1b[0m", i, idx);
-                    }
+    for entry in entries {
+        let file_path = entry.unwrap().path();
+        let file_name = file_path.display();
+
+        if file_path.is_file() && file_path.extension().unwrap() == "json" {
+            json_paths.push(file_name.to_string());
+        }
+    }
+
+    json_paths
+}
+
+pub fn get_data(fire_path: &str) -> Vec<String> {
+    let mut file = File::open(fire_path).expect("ファイルを開けませんでした。");
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)
+        .expect("ファイルを読み込めませんでした");
+
+    let json: Value = serde_json::from_str(&contents).expect("JSONのパースに失敗しました。");
+
+    let mut vec_string = Vec::new();
+
+    if let Some(arr) = json.as_array() {
+        for value in arr {
+            if let Some(str_value) = value.as_str() {
+                vec_string.push(str_value.to_string());
+            }
+        }
+    }
+    vec_string
+}
+
+pub fn comparison(file_path: &str) {
+    let mut group: Vec<Vec<String>> = Vec::new();
+
+    for i in search_file(file_path) {
+        group.push(get_data(&i));
+    }
+
+    for i in 1..group.len() {
+        commands::line();
+        let before_vec = &group[i - 1];
+        let after_vec = &group[i];
+
+        for (index, (before, after)) in before_vec.iter().zip(after_vec.iter()).enumerate() {
+            let after_index = after_vec.iter().position(|x| x == before);
+            if before == after {
+                println!(
+                    "{}-{}{}{}:{}{}",
+                    cmd_color!(green_b),
+                    cmd_color!(reset),
+                    cmd_color!(green),
+                    index + 1,
+                    before,
+                    cmd_color!(reset)
+                );
+            } else if after_vec.contains(before) {
+                if index > after_index.unwrap() {
+                    print!("{}↑", cmd_color!(yellow_b));
+                } else {
+                    print!("{}↓", cmd_color!(red_b));
                 }
-                None => println!("\x1b[31m{}: out\x1b[0m", i),
+                println!(
+                    "{}{}{}->{}:{}->{}{}",
+                    cmd_color!(reset),
+                    cmd_color!(yellow),
+                    index + 1,
+                    after_index.unwrap() + 1,
+                    before,
+                    after,
+                    cmd_color!(reset)
+                );
+            } else {
+                println!(
+                    "{}x{}:OUT{}",
+                    cmd_color!(red_b),
+                    index + 1,
+                    cmd_color!(reset)
+                );
             }
         }
     }

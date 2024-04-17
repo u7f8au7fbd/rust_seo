@@ -40,7 +40,8 @@ pub async fn get_google(
             }
         }
     }
-
+    commands::line();
+    
     let json_data = serde_json::to_string(&resoult)?;
     let dir_path = format!("./db/out/{}", commands::format_path(&query));
 

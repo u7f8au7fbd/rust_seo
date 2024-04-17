@@ -1,6 +1,6 @@
 use eframe::*;
 
-use crate::{comparison, connect};
+use crate::{comparison, connect, input};
 
 pub fn gui() -> Result<(), eframe::Error> {
     let options = eframe::NativeOptions {
@@ -32,15 +32,18 @@ pub fn gui() -> Result<(), eframe::Error> {
 
             ctx.set_fonts(fonts);
             //以下よりUIの作成
+            let config = input::config();
             if ui.button("比較").clicked() {
-                comparison::test();
+                let mut db_path = "./db/out/".to_string();
+                db_path.push_str(&config.search_words);
+                comparison::comparison(&db_path);
             }
             if ui.button("探索").clicked() {
                 tokio::task::spawn(async move {
                     connect::get_google(
-                        "Rust言語".to_string(),
-                        "AIzaSyC2lo3mkteyh87zvQy2rfy48b6hgbPd6Vg".to_string(),
-                        "570e13bebba514d9d".to_string(),
+                        config.search_words,
+                        config.api_key,
+                        config.search_engine_id,
                     )
                     .await
                     .unwrap();

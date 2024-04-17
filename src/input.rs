@@ -1,7 +1,7 @@
 use serde::Deserialize;
 use std::fs::File;
 use std::io::Read;
-pub fn input_config() {
+pub fn config()->Config{
     // Open the config file
     let mut file = File::open("./db/in/config.json").expect("ファイルが見つかりません");
 
@@ -17,6 +17,7 @@ pub fn input_config() {
     println!("{}", config.api_key);
     println!("{}", config.search_engine_id);
     println!("{}", config.search_words);
+    config
 }
 
 #[derive(Debug, Deserialize, Clone)]
