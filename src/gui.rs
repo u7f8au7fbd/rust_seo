@@ -33,7 +33,7 @@ pub fn gui() -> Result<(), eframe::Error> {
             ctx.set_fonts(fonts);
             //以下よりUIの作成
             if ui.button("比較").clicked() {
-                let mut db_path = "./db/out/".to_string();
+                let mut db_path = "./db/url".to_string();
                 db_path.push_str(&input::config().search_words);
                 json::comparison(&db_path);
             }

@@ -41,9 +41,9 @@ pub async fn get_google(
         }
     }
     commands::line();
-    
+
     let json_data = serde_json::to_string(&resoult)?;
-    let dir_path = format!("./db/out/{}", commands::format_path(&query));
+    let dir_path = format!("./db/url/{}", commands::format_path(&query));
 
     std::fs::create_dir_all(&dir_path)?;
 
