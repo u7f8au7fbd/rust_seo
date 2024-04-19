@@ -1,6 +1,6 @@
 use eframe::*;
 
-use crate::{json_system, connect, input};
+use crate::{connect, input, json};
 
 pub fn gui() -> Result<(), eframe::Error> {
     let options = eframe::NativeOptions {
@@ -35,14 +35,15 @@ pub fn gui() -> Result<(), eframe::Error> {
             if ui.button("比較").clicked() {
                 let mut db_path = "./db/out/".to_string();
                 db_path.push_str(&input::config().search_words);
-                json_system::comparison(&db_path);
+                json::comparison(&db_path);
             }
             if ui.button("探索").clicked() {
+                let config = input::config();
                 tokio::task::spawn(async move {
                     connect::get_google(
-                        input::config().search_words,
-                        input::config().api_key,
-                        input::config().search_engine_id,
+                        config.search_words,
+                        config.api_key,
+                        config.search_engine_id,
                     )
                     .await
                     .unwrap();

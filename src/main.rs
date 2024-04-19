@@ -1,8 +1,9 @@
 mod commands;
 mod connect;
 mod gui;
+mod html;
 mod input;
-mod json_system;
+mod json;
 #[macro_use]
 mod macros;
 
@@ -11,7 +12,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     commands::clear();
     commands::utf8();
 
-    input::config();
     gui::gui()?;
+
     Ok(())
 }
