@@ -1,8 +1,7 @@
+use crate::{cmd, format_path};
 use chrono::Local;
 use std::fs::File;
 use std::io::Write;
-
-use crate::commands;
 
 pub async fn get_google(
     query: String,
@@ -40,10 +39,10 @@ pub async fn get_google(
             }
         }
     }
-    commands::line();
+    cmd!(line);
 
     let json_data = serde_json::to_string(&resoult)?;
-    let dir_path = format!("./db/url/{}", commands::format_path(&query));
+    let dir_path = format!("./db/url/{}", format_path!(&query));
 
     std::fs::create_dir_all(&dir_path)?;
 

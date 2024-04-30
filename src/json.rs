@@ -1,4 +1,4 @@
-use crate::{cmd_color, commands};
+use crate::{cmd,cmd_color};
 use serde_json::Value;
 use std::fs::File;
 use std::io::Read;
@@ -48,7 +48,7 @@ pub fn comparison(file_path: &str) {
     }
 
     for i in 1..group.len() {
-        commands::line();
+        cmd!(line);
         let before_vec = &group[i - 1];
         let after_vec = &group[i];
 

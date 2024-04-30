@@ -14,8 +14,13 @@ tokio = { version = "*", features = ["full"] }
 futures = "*"
 #guiクレート
 eframe = { version = "*", features = ["default"] }
+catppuccin-egui = { version = "*", default-features = false, features = [
+    "egui27",
+] }
 #現在時刻の取得
 chrono = "*"
+#Web
+axum = "*"
 
 [profile.dev]
 opt-level = 1
